@@ -1,2 +1,4 @@
-# PyCS-Packages
-Package python dédiés à MyCooperlSuite pour le projet d'automatisation des tests
+# DICT-TOOLS
+Package python contenant des outils pour travailler avec les dictionnaires et json.
+> * Tri par valeur de clé complexe
+> * identification des clés différentes
