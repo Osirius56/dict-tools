@@ -1,15 +1,20 @@
-import os
 import json
 import argparse
-from pprint import pprint
 import operator
-from statistics import mean,median
 
 __version__ = "0.0.1"
 
 def compare(o1,o2):
-    keys_diff = {key for key in o1.keys()}.symmetric_difference({key for key in o2.keys()}) # compare keys list
-    return keys_diff
+    if o1 != o2:
+        o2_diff = {f"{key}:{value}" for key,value in o1.items()}.difference({f"{key}:{value}" for key,value in o2.items()}) # compare keys list 
+        o1_diff = {f"{key}:{value}" for key,value in o2.items()}.difference({f"{key}:{value}" for key,value in o1.items()}) # compare keys list 
+        return {
+                    "differences":{
+                        "Dict_2_changes":dict([tuple(diff.split(":")) for diff in o1_diff]),
+                        "Dict_1_values":dict([tuple(diff.split(":")) for diff in o2_diff]),
+                    }
+                }
+    return None
 
 def sort_by_value(data:dict,sort_key:str):
     # Define Sorter Matrix
@@ -56,7 +61,25 @@ if __name__ == "__main__":
         with open(args.file) as fp:
             data = json.load(fp)
         output = sort_by_value(data,args.sort_by_value)
-        [print(v['infos']['identifiantSite'],k[:19],"start",v['infos']['startTime'],f"Nombre d'événements: {v['metrics']['event_count']:>5}",f"Latence SG: {mean(v['metrics']['syncGateway_latency']):>10.3f} s","temps de synchro",f"{float(v['metrics']['sse_duration']):>8.2f} secondes",sep=" : ") for k,v in output.items()]
+
     if args.output:
         with open(args.output,"w") as fp:
             json.dump(output,fp,indent=4)
+
+
+
+
+    a={ "aaaa":125,
+        "bbbb":120,
+        "cccc":30
+        }
+    b={ "aaaa":126,
+        "cccc":30
+        }
+    c={ "aaaa":125,
+        "bbbb":120,
+        "cccc":30
+        }
+
+    print(compare(a,b))
+    print(compare(a,c))
