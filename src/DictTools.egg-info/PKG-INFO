@@ -1,0 +1,20 @@
+Metadata-Version: 2.1
+Name: DictTools
+Version: 0.0.2
+Summary: description
+Home-page: url to repository
+Author: Osirius56
+Author-email: bhrssoftware@gmail.com
+Project-URL: Bug Tracker, url to bugTracker
+Classifier: Programming Language :: Python :: 3
+Classifier: Development Status :: 3 - Alpha
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+
+# DICT-TOOLS
+Package python contenant des outils pour travailler avec les dictionnaires et json.
+> * Tri par valeur de clé complexe
+> * identification des clés différentes
