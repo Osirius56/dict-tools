@@ -3,10 +3,10 @@ README.md
 pyproject.toml
 setup.cfg
 setup.py
+src/DictTools/DictTools.py
+src/DictTools/__init__.py
 src/DictTools.egg-info/PKG-INFO
 src/DictTools.egg-info/SOURCES.txt
 src/DictTools.egg-info/dependency_links.txt
 src/DictTools.egg-info/top_level.txt
-src/dict_utils/DictTools.py
-src/dict_utils/__init__.py
 test/test.py
