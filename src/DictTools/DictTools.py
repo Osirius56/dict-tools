@@ -62,9 +62,18 @@ if __name__ == "__main__":
             output = sort_by_value(data,args.sort_by)
         else:
             print("Please use -f <filename.json> to parse.")
-        [print(
-            f"{k:>60}: startTime:{v['infos']['startTime']}, endTime: {v['infos']['endTime']},temps cumulé: {datetime.datetime.strptime(v['infos']['endTime'],'%Y-%m-%dT%H:%M:%S.%f')-datetime.datetime.strptime(v['infos']['startTime'],'%Y-%m-%dT%H:%M:%S.%f')}, Nombre d'événements: {v['metrics']['event_count']:>5}, Latence SG: {mean(v['metrics']['syncGateway_latency']):>8.3f} s, temps de synchro: {float(v['metrics']['sse_duration']):>8.2f} secondes")
-            for k,v in output.items()]
+        error_count = 0
+        for k,v in output.items():
+            try:
+                print(f"{str(k).rsplit('_',maxsplit=1)[0]:>25}: startTime:{v['infos']['startTime']}, endTime: {v['infos']['endTime']},temps cumulé: {datetime.datetime.strptime(v['infos']['endTime'],'%Y-%m-%dT%H:%M:%S.%f')-datetime.datetime.strptime(v['infos']['startTime'],'%Y-%m-%dT%H:%M:%S.%f')}, Nombre d'événements: {v['metrics']['event_count']:>5}, Latence SG: {mean(v['metrics']['syncGateway_latency']):>8.3f} s, temps de synchro: {float(v['metrics']['sse_duration']):>8.2f} secondes")   
+            except Exception as err:
+                error_count+=1
+                continue
+        if error_count>0:
+            print(f"ERROR :: {error_count} lot(s) en erreur de traitement")
+        # [print(
+        #     f"{k:>60}: startTime:{v['infos']['startTime']}, endTime: {v['infos']['endTime']},temps cumulé: {datetime.datetime.strptime(v['infos']['endTime'],'%Y-%m-%dT%H:%M:%S.%f')-datetime.datetime.strptime(v['infos']['startTime'],'%Y-%m-%dT%H:%M:%S.%f')}, Nombre d'événements: {v['metrics']['event_count']:>5}, Latence SG: {mean(v['metrics']['syncGateway_latency']):>8.3f} s, temps de synchro: {float(v['metrics']['sse_duration']):>8.2f} secondes")
+        #     for k,v in output.items()]
 
     if args.output != None:
         with open(args.output,"w") as fp:
